@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode } from 'react'
 import { AdminSidebar } from '@/components/admin/sidebar'
 import { AdminHeader } from '@/components/admin/header'
