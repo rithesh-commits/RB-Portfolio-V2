@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'; // Ensures the route is always dynamic
+
 import { NextResponse } from 'next/server'
 import { getNotionBlogs, mapNotionBlog } from '@/lib/notion'
 
