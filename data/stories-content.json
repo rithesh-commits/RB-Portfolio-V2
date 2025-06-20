@@ -1,0 +1,17 @@
+{
+  "stories": [
+    {
+      "id": "1",
+      "title": "అమ్మ చేతుల రుచి",
+      "excerpt": "గ్రామంలో పెరిగిన అమ్మ చేతుల వంట రుచిని మరచిపోలేని కథ. పట్టణంలో ఉద్యోగం చేస్తున్న కొడుకు ఇంటికి వచ్చినప్పుడు...",
+      "content": "Full story content here...",
+      "category": "family",
+      "tags": ["అమ్మ", "కుటుంబం", "వంట", "గ్రామం"],
+      "publishedDate": "2024-12-15",
+      "readingTime": 8,
+      "featured": true,
+      "image": "/placeholder.svg?height=300&width=400",
+      "likes": 245
+    }
+  ]
+}

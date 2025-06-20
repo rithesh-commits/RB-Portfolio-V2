@@ -1,0 +1,136 @@
+{
+  "intro": {
+    "text1": "నేను రవీందర్ బేజ్జరాపు, తెలంగాణ రాష్ట్రంలోని ఒక చిన్న గ్రామంలో పుట్టి పెరిగాను. చిన్నప్పటి నుండే కథలు, కవితలు వింటూ, చదువుతూ పెరిగాను. మా అమ్మ చెప్పే జానపద కథలు, తాత చెప్పే పురాణ కథలు నా మనసులో లోతుగా నాటుకున్నాయి.",
+    "text2": "పాఠశాల రోజుల్లోనే రచనలు రాయడం మొదలుపెట్టాను. మొదట చిన్న కవితలు, తర్వాత కథలు రాయడం మొదలుపెట్టాను. కాలేజీ రోజుల్లో స్థానిక పత్రికలలో నా రచనలు ప్రచురితమయ్యాయి.",
+    "text3": "నేటికి 15 సంవత్సరాలుగా రాస్తూ వస్తున్నాను. నా రచనలలో ప్రధానంగా గ్రామీణ జీవితం, సామాజిక సమస్యలు, మానవ సంబంధాలు, తెలంగాణ సంస్కృతి గురించి రాస్తాను."
+  },
+  "timeline": [
+    {
+      "year": "1985",
+      "title": {
+        "te": "జన్మ",
+        "en": "Birth"
+      },
+      "description": {
+        "te": "తెలంగాణలోని కరీంనగర్ జిల్లాలో జన్మించాను",
+        "en": "Born in Karimnagar district of Telangana"
+      },
+      "icon": "birth"
+    },
+    {
+      "year": "2005",
+      "title": {
+        "te": "మొదటి కథ ప్రచురణ",
+        "en": "First Story Published"
+      },
+      "description": {
+        "te": "స్థానిక పత్రికలో మొదటి కథ 'గ్రామం' ప్రచురితమైంది",
+        "en": "First story 'Gramam' published in local magazine"
+      },
+      "icon": "book"
+    },
+    {
+      "year": "2010",
+      "title": {
+        "te": "మొదటి కథా సంకలనం",
+        "en": "First Story Collection"
+      },
+      "description": {
+        "te": "'తెలంగాణ మట్టి వాసన' పేరుతో మొదటి పుస్తకం వెలువడింది",
+        "en": "First book 'Telangana Matti Vasana' was published"
+      },
+      "icon": "award"
+    },
+    {
+      "year": "2015",
+      "title": {
+        "te": "రాష్ట్ర అవార్డు",
+        "en": "State Award"
+      },
+      "description": {
+        "te": "తెలంగాణ రాష్ట్ర సాహిత్య అకాడమీ అవార్డు అందుకున్నాను",
+        "en": "Received Telangana State Literary Academy Award"
+      },
+      "icon": "trophy"
+    },
+    {
+      "year": "2020",
+      "title": {
+        "te": "డిజిటల్ ప్రపంచంలోకి",
+        "en": "Digital World Entry"
+      },
+      "description": {
+        "te": "బ్లాగింగ్ మరియు ఆన్‌లైన్ రచనలు మొదలుపెట్టాను",
+        "en": "Started blogging and online writings"
+      },
+      "icon": "digital"
+    },
+    {
+      "year": "2024",
+      "title": {
+        "te": "వ్యక్తిగత వెబ్‌సైట్",
+        "en": "Personal Website"
+      },
+      "description": {
+        "te": "నా రచనలను అందరికీ అందుబాటులో ఉంచడానికి ఈ వెబ్‌సైట్ ప్రారంభించాను",
+        "en": "Launched this website to make my writings accessible to everyone"
+      },
+      "icon": "website"
+    }
+  ],
+  "achievements": [
+    {
+      "title": {
+        "te": "తెలంగాణ రాష్ట్ర సాహిత్య అకాడమీ అవార్డు",
+        "en": "Telangana State Literary Academy Award"
+      },
+      "year": "2015",
+      "description": {
+        "te": "కథా సాహిత్యంలో అత్యుత్తమ కృతికి",
+        "en": "For excellence in short story literature"
+      }
+    },
+    {
+      "title": {
+        "te": "జిల్లా స్థాయి సాహిత్య పురస్కారం",
+        "en": "District Level Literary Award"
+      },
+      "year": "2012",
+      "description": {
+        "te": "యువ రచయితలకు ప్రోత్సాహక పురస్కారం",
+        "en": "Encouragement award for young writers"
+      }
+    },
+    {
+      "title": {
+        "te": "ఆల్ ఇండియా రేడియో",
+        "en": "All India Radio"
+      },
+      "year": "2018",
+      "description": {
+        "te": "కథలు మరియు కవితల ప్రసారం",
+        "en": "Broadcasting of stories and poems"
+      }
+    },
+    {
+      "title": {
+        "te": "సాహిత్య సమ్మేళనాలు",
+        "en": "Literary Conferences"
+      },
+      "year": "2016-2024",
+      "description": {
+        "te": "వివిధ రాష్ట్రాలలో 50+ కార్యక్రమాలలో పాల్గొన్నాను",
+        "en": "Participated in 50+ programs across different states"
+      }
+    }
+  ],
+  "philosophy": {
+    "quote": "సాహిత్యం అనేది కేవలం వినోదం మాత్రమే కాదు, అది సమాజానికి దర్పణం. నా రచనల ద్వారా మన సంస్కృతిని, మన విలువలను భవిష్యత్ తరాలకు అందించాలని అనుకుంటున్నాను.",
+    "points": [
+      "గ్రామీణ జీవితంలోని సత్యాలను చెప్పడం",
+      "తెలంగాణ సంస్కృతిని పరిరక్షించడం",
+      "సామాజిక అవగాహన పెంపొందించడం",
+      "యువతకు మార్గదర్శకత్వం అందించడం"
+    ]
+  }
+}
