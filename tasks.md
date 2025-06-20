@@ -242,12 +242,13 @@ Portfolio website with focus on Telugu content, featuring blogs, novels, and sto
   - [x] Test recommendation accuracy
 
 - [x] **Comment System Integration** ✅ COMPLETED
-  - [x] Install and configure Giscus component
-  - [x] Create bilingual comment section component
-  - [x] Integrate with blog post pages
-  - [x] Add environment configuration
-  - [x] Update documentation and setup instructions
-  - [x] Test comment functionality
+  - [x] Set up Supabase database and create `comments` table.
+  - [x] Implement backend API for submitting and fetching comments.
+  - [x] Build custom frontend component with `shadcn/ui`.
+  - [x] Add "Owner" badge feature for admin comments.
+  - [x] Include newsletter signup checkbox in the comment form.
+  - [x] Implement default-approve moderation workflow.
+  - [x] Update all project documentation.
 
 The following Phase 2 features have been removed from the codebase:
 - Reading progress tracking

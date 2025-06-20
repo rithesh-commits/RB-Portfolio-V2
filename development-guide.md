@@ -424,61 +424,46 @@ This ensures the site remains stable even if some content is missing or not yet 
 **Access**: Available at `/api/rss` for power users and content aggregators
 **Rationale**: Most casual users don't understand RSS feeds, so the button was removed to avoid visual clutter while maintaining functionality for tech-savvy users and SEO benefits.
 
-### Comment System Implementation ✅ COMPLETED
-**Status**: ✅ Implemented with Giscus integration
-**Technology**: Giscus (GitHub Discussions-based comments)
-**Cost**: Free (uses GitHub Discussions as backend)
+## Custom Comment System (Supabase)
 
-#### Features Implemented
-- **Bilingual UI**: Comment section interface in both English and Telugu
-- **GitHub Integration**: Uses GitHub Discussions for comment storage
-- **Moderation**: Built-in GitHub moderation tools
-- **Responsive Design**: Works perfectly on all devices
-- **Loading States**: Smooth loading animations
-- **Error Handling**: Graceful error display
-- **SEO Friendly**: Comments are indexed by search engines
+This project features a fully custom, ad-free comment system built with Next.js and Supabase. It is designed for performance, perfect visual integration, and a seamless user experience.
 
-#### Technical Implementation
-- **Component**: `components/comment-section.tsx`
-- **Integration**: Added to `/blogs/[slug]/page.tsx`
-- **Configuration**: Environment variables for Giscus setup
-- **Styling**: Follows project design guidelines with primary color `#0056D2`
+### Key Features
+- **100% Ad-Free**: No third-party scripts or advertisements.
+- **Full Data Ownership**: All comments are stored in your own Supabase database.
+- **Perfect Design Integration**: Built with `shadcn/ui` to match the website's aesthetic.
+- **Newsletter Signup**: Includes a checkbox to capture reader emails for a newsletter.
+- **"Owner" Badge**: A special badge highlights comments made by the site owner for added authority.
+- **Bilingual Support**: All user-facing text is available in English and Telugu.
 
-#### Environment Variables Required
-```env
-NEXT_PUBLIC_GISCUS_REPO=your-username/your-repo
-NEXT_PUBLIC_GISCUS_REPO_ID=your_repo_id
-NEXT_PUBLIC_GISCUS_CATEGORY=Comments
-NEXT_PUBLIC_GISCUS_CATEGORY_ID=your_category_id
-```
+### How It Works
 
-#### Setup Instructions
-1. **Enable GitHub Discussions**: Go to your GitHub repository settings and enable Discussions
-2. **Create Discussion Category**: Create a "Comments" category in Discussions
-3. **Get Repository ID**: Use GitHub API or tools to get your repository ID
-4. **Get Category ID**: Get the category ID from the Discussions settings
-5. **Configure Environment**: Add the required environment variables
-6. **Test**: Visit any blog post to see the comment section
+#### Frontend (`components/comment-section.tsx`)
+- A user-friendly form allows readers to submit their Name, Email, and Comment.
+- Comments are submitted to a custom backend API endpoint.
+- The component fetches and displays all approved comments in real-time.
+- It gracefully handles loading, error, and empty states.
 
-#### Benefits
-- **Zero Cost**: Completely free to use
-- **No Database**: Uses GitHub's infrastructure
-- **Reliable**: GitHub's high availability
-- **Moderation**: Built-in tools for comment management
-- **Bilingual**: Supports Telugu comments naturally
-- **Performance**: Lightweight integration
+#### Backend (`app/api/comments/route.ts`)
+- A serverless function handles `GET` and `POST` requests.
+- **POST**: Receives new comment data, validates it, and inserts it into the Supabase `comments` table. New comments are **approved by default** (`is_approved = true`).
+- **GET**: Fetches all comments for a given blog post where `is_approved = true`.
 
-#### Design Features
-- **Card Layout**: Clean card design matching blog post styling
-- **Icon Integration**: Message circle icon with brand colors
-- **Loading Animation**: Spinner with bilingual loading text
-- **Error States**: User-friendly error messages
-- **Responsive**: Adapts to all screen sizes
-- **Accessibility**: Proper ARIA labels and semantic HTML
+### Your Workflow as an Administrator
 
-#### Future Enhancements
-- **Comment Analytics**: Track comment engagement
-- **Email Notifications**: Notify on new comments
-- **Comment Moderation**: Advanced moderation features
-- **Comment Search**: Search within comments
-- **Comment Reactions**: Like/dislike functionality
+#### Moderating Comments
+By default, all comments are visible immediately. If you need to hide an inappropriate or spammy comment:
+1. Go to your **Supabase dashboard**.
+2. Navigate to the **Table Editor** and select the `comments` table.
+3. Find the comment you wish to hide.
+4. Click to edit the row and change the `is_approved` value from `true` to `false`.
+5. The comment will instantly be hidden from your website.
+
+#### Marking Your Own Comments as "Owner"
+To make your comments stand out with the "Owner" badge:
+1. Post a comment on your blog using the form, just like any other reader.
+2. Go to your **Supabase dashboard** and find your new comment in the `comments` table.
+3. Click to edit the row and in the `author_role` column, type `owner`.
+4. Your comment will now automatically display the "Owner" badge on the site.
+
+---
