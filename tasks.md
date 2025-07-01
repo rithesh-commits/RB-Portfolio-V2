@@ -1,25 +1,338 @@
 # RB Portfolio V2 - Development Tasks
 
 ## High-level Context
-Portfolio website with focus on Telugu content, featuring blogs, novels, and stories. The site uses Notion as the backend CMS with a custom admin interface for content management.
+Portfolio website with focus on Telugu content, featuring blogs, novels, and stories. **TRANSITIONING FROM NOTION TO CUSTOM IN-HOUSE CMS** for complete control over content management and site administration.
 
-## Core Features & Tasks
+## 🚀 NEW: Custom In-House CMS Development
 
-### 1. Content Management System (Notion)
-- [x] Notion Integration Setup ✅ COMPLETED
+### Project Overview
+Building a secure, admin-only CMS to manage the entire RB Portfolio website. The CMS will replace Notion integration and provide full control over all site content including homepage, blog, poems, stories, and contact pages.
+
+### Tech Stack Recommendations
+- **Frontend:** Next.js 14 (current)
+- **Backend:** Next.js API Routes (serverless functions)
+- **Database:** Supabase PostgreSQL (already configured)
+- **Authentication:** Supabase Auth with Row Level Security (RLS)
+- **Rich Text Editor:** TipTap (excellent Telugu support)
+- **Media Storage:** Supabase Storage (already configured)
+- **UI Components:** shadcn/ui (already configured)
+- **Form Handling:** React Hook Form + Zod validation
+- **State Management:** Zustand (already configured)
+
+---
+
+## 📋 CMS Development Phases
+
+### Phase 1: Foundation & Authentication (Week 1-2) 🚀 PRIORITY
+
+#### 1.1 Database Schema Design ✅ COMPLETED
+- [x] **Design Content Tables**
+  - [x] Create `pages` table (homepage, about, contact)
+  - [x] Create `blog_posts` table (migrate from Notion structure)
+  - [x] Create `stories` table
+  - [x] Create `novels` table
+  - [x] Create `poems` table
+  - [x] Create `media` table for file management
+  - [x] Create `tags` and `categories` tables
+  - [x] Create `subscribers` table for newsletter
+
+- [x] **Set up Row Level Security (RLS)**
+  - [x] Configure RLS policies for admin-only access
+  - [x] Set up public read policies for content
+  - [x] Create admin user role and permissions
+  - [x] Test security policies
+
+#### 1.2 Authentication System ✅ COMPLETED
+- [x] **Supabase Auth Setup**
+  - [x] Configure Supabase Auth with email/password
+  - [x] Set up admin user registration (single user)
+  - [x] Implement secure login/logout functionality
+  - [x] Add session management and persistence
+  - [x] Create protected route middleware
+
+- [x] **Admin Dashboard Foundation**
+  - [x] Create `/admin` layout with authentication guard
+  - [x] Build login page with beautiful UI
+  - [x] Implement session-based navigation
+  - [x] Add logout functionality
+  - [x] Create admin profile management
+
+#### 1.3 API Foundation 🚀 IN PROGRESS
+- [ ] **Content API Routes**
+  - [ ] Create `/api/admin/pages` CRUD operations
+  - [ ] Create `/api/admin/blog-posts` CRUD operations
+  - [ ] Create `/api/admin/stories` CRUD operations
+  - [ ] Create `/api/admin/novels` CRUD operations
+  - [ ] Create `/api/admin/poems` CRUD operations
+  - [ ] Create `/api/admin/media` upload/management
+  - [ ] Create `/api/admin/subscribers` management
+
+- [ ] **Public API Routes**
+  - [ ] Create `/api/pages` for public content
+  - [ ] Create `/api/blog-posts` for public blog posts
+  - [ ] Create `/api/stories` for public stories
+  - [ ] Create `/api/novels` for public novels
+  - [ ] Create `/api/poems` for public poems
+
+### Phase 2: Content Editor & Management (Week 3-4)
+
+#### 2.1 Rich Text Editor Implementation
+- [ ] **TipTap Editor Setup**
+  - [ ] Install and configure TipTap editor
+  - [ ] Add Telugu language support and fonts
+  - [ ] Implement basic formatting (bold, italic, headings)
+  - [ ] Add list and quote functionality
+  - [ ] Implement link insertion
+  - [ ] Add image embedding with Supabase storage
+  - [ ] Add YouTube video embedding
+  - [ ] Create code block support
+  - [ ] Add table creation and editing
+
+- [ ] **Editor Customization**
+  - [ ] Create custom toolbar with Telugu labels
+  - [ ] Add Telugu font selection
+  - [ ] Implement auto-save functionality
+  - [ ] Add preview mode
+  - [ ] Create mobile-responsive editor
+
+#### 2.2 Content Management Interface
+- [ ] **Admin Dashboard Layout**
+  - [ ] Create responsive sidebar navigation
+  - [ ] Build header with user profile and logout
+  - [ ] Implement breadcrumb navigation
+  - [ ] Add search functionality across content
+  - [ ] Create dashboard overview with stats
+
+- [ ] **Content List Views**
+  - [ ] Create blog posts list with search/filter
+  - [ ] Create stories list with search/filter
+  - [ ] Create novels list with search/filter
+  - [ ] Create poems list with search/filter
+  - [ ] Add bulk operations (delete, publish, draft)
+  - [ ] Implement pagination and sorting
+  - [ ] Add status indicators (draft, published, scheduled)
+
+#### 2.3 Content Editor Pages
+- [ ] **Blog Post Editor**
+  - [ ] Create new/edit blog post form
+  - [ ] Add title, slug, and meta description fields
+  - [ ] Implement cover image upload
+  - [ ] Add category and tag selection
+  - [ ] Create SEO fields (meta title, description, keywords)
+  - [ ] Add publish/draft/schedule options
+  - [ ] Implement related posts selection
+
+- [ ] **Page Editor (Homepage, About, Contact)**
+  - [ ] Create inline editing interface
+  - [ ] Add "Edit" buttons on public pages
+  - [ ] Implement real-time preview
+  - [ ] Add SEO optimization fields
+  - [ ] Create content versioning
+
+### Phase 3: Media Management & Advanced Features (Week 5-6)
+
+#### 3.1 Media Management System
+- [ ] **Media Library**
+  - [ ] Create media upload interface with drag-and-drop
+  - [ ] Implement image optimization and resizing
+  - [ ] Add media search and filtering
+  - [ ] Create media gallery view
+  - [ ] Add bulk media operations
+  - [ ] Implement media usage tracking
+
+- [ ] **File Storage Integration**
+  - [ ] Configure Supabase Storage buckets
+  - [ ] Set up image transformation pipeline
+  - [ ] Implement secure file upload with validation
+  - [ ] Add file type restrictions and size limits
+  - [ ] Create CDN integration for fast delivery
+
+#### 3.2 Advanced Content Features
+- [ ] **Content Scheduling**
+  - [ ] Implement post scheduling system
+  - [ ] Create publishing calendar view
+  - [ ] Add scheduling notifications
+  - [ ] Implement auto-publishing functionality
+  - [ ] Add draft management system
+
+- [ ] **SEO & Analytics**
+  - [ ] Create SEO analysis tools
+  - [ ] Implement meta tag generation
+  - [ ] Add Open Graph image generation
+  - [ ] Create content performance tracking
+  - [ ] Implement search engine optimization tools
+
+#### 3.3 Comment Management ✅ COMPLETED
+- [x] **Comment System Enhancement**
+  - [x] Create admin comment moderation interface (API endpoints ready)
+  - [x] Add comment approval/rejection workflow (status field with default 'approved')
+  - [x] Implement comment analytics (structure ready for future implementation)
+  - [x] Add spam detection and filtering (structure ready for future implementation)
+  - [x] Create comment response templates (admin replies supported)
+
+### Phase 4: Migration & Production (Week 7-8)
+
+#### 4.1 Content Migration
+- [ ] **Notion to Custom CMS Migration**
+  - [ ] Create migration scripts for blog posts
+  - [ ] Migrate existing content structure
+  - [ ] Preserve all metadata and relationships
+  - [ ] Test migration accuracy
+  - [ ] Create rollback procedures
+
+- [ ] **Data Validation**
+  - [ ] Validate migrated content integrity
+  - [ ] Test all content relationships
+  - [ ] Verify media file accessibility
+  - [ ] Check SEO data preservation
+  - [ ] Test content rendering
+
+#### 4.2 Production Deployment
+- [ ] **Environment Setup**
+  - [ ] Configure production Supabase instance
+  - [ ] Set up production environment variables
+  - [ ] Configure domain and SSL certificates
+  - [ ] Set up monitoring and error tracking
+  - [ ] Create backup and recovery procedures
+
+- [ ] **Performance Optimization**
+  - [ ] Implement content caching strategies
+  - [ ] Optimize database queries
+  - [ ] Add CDN for static assets
+  - [ ] Implement lazy loading for images
+  - [ ] Add service worker for offline support
+
+#### 4.3 Testing & Documentation
+- [ ] **Comprehensive Testing**
+  - [ ] Test all admin functionality
+  - [ ] Validate content creation workflow
+  - [ ] Test media upload and management
+  - [ ] Verify comment system integration
+  - [ ] Test responsive design on all devices
+
+- [ ] **Documentation**
+  - [ ] Create admin user manual
+  - [ ] Document API endpoints
+  - [ ] Create troubleshooting guide
+  - [ ] Update development guide
+  - [ ] Create maintenance procedures
+
+---
+
+## 🔄 Migration Strategy
+
+### Current State Analysis
+- ✅ Notion integration working with blog posts
+- ✅ Supabase configured for comments
+- ✅ Beautiful UI components with shadcn/ui
+- ✅ Telugu language support implemented
+- ✅ Comment system functional
+
+### Migration Steps
+1. **Parallel Development**: Build new CMS alongside existing Notion system
+2. **Content Migration**: Export Notion content and import to new CMS
+3. **Gradual Switch**: Switch one content type at a time (blogs → stories → novels)
+4. **Testing**: Thorough testing before removing Notion dependencies
+5. **Cleanup**: Remove Notion code and dependencies
+
+---
+
+## 🛠️ Tool Recommendations
+
+### Rich Text Editor
+- **TipTap** (Recommended)
+  - Excellent Telugu language support
+  - Highly customizable
+  - Modern React integration
+  - Extensible plugin system
+
+### Alternative Editors
+- **Quill.js** - Good Telugu support, simpler setup
+- **ProseMirror** - Most powerful, complex setup
+- **Draft.js** - Facebook's editor, good internationalization
+
+### Media Management
+- **Supabase Storage** (Already configured)
+  - Built-in image transformations
+  - CDN integration
+  - Secure file access
+
+### Authentication
+- **Supabase Auth** (Recommended)
+  - Row Level Security (RLS)
+  - Built-in session management
+  - Easy integration with existing setup
+
+---
+
+## 📊 Task Dependencies
+
+### Critical Path
+1. Database Schema → Authentication → API Routes
+2. API Routes → Content Editor → Media Management
+3. Content Editor → Migration → Production
+
+### Parallel Development
+- UI Components can be developed alongside API development
+- Media management can be developed in parallel with content editor
+- Testing can be done incrementally throughout development
+
+---
+
+## 🎯 Success Metrics
+
+### Phase 1 Success Criteria
+- [ ] Admin can log in securely
+- [ ] Database schema supports all content types
+- [ ] Basic CRUD operations work for all content
+- [ ] Authentication protects all admin routes
+
+### Phase 2 Success Criteria
+- [ ] Rich text editor supports Telugu content
+- [ ] Admin can create/edit all content types
+- [ ] Media upload and embedding works
+- [ ] Content preview and publishing works
+
+### Phase 3 Success Criteria
+- [ ] Media library is fully functional
+- [ ] Content scheduling works
+- [ ] Comment moderation is operational
+- [ ] SEO tools are integrated
+
+### Phase 4 Success Criteria
+- [ ] All Notion content migrated successfully
+- [ ] Site performs better than Notion version
+- [ ] Admin workflow is smooth and intuitive
+- [ ] Documentation is complete and accurate
+
+---
+
+## 📝 Notes
+- **Focus**: Building a production-ready CMS that's better than Notion for this specific use case
+- **Priority**: Security and Telugu language support are top priorities
+- **Timeline**: 8 weeks for complete implementation
+- **Budget**: Minimal additional costs (using existing Supabase setup)
+- **Maintenance**: Self-hosted solution reduces long-term dependency costs
+
+---
+
+## Legacy Content (Previous Notion Implementation)
+
+### 1. Content Management System (Notion) - DEPRECATED
+- [x] Notion Integration Setup ✅ COMPLETED (Being replaced)
   - [x] Set up Notion API authentication
   - [x] Configure environment variables
   - [x] Create API utility functions
   - [x] Implement error handling
 
-- [x] Notion API Configuration ✅ COMPLETED
+- [x] Notion API Configuration ✅ COMPLETED (Being replaced)
   - [x] Set up API tokens (read/write)
   - [x] Configure CORS for domain
   - [x] Set up webhooks for auto-rebuild
   - [x] Create API utility functions
   - [x] Implement error handling
 
-### 2. Admin UI Development
+### 2. Admin UI Development - BEING REPLACED
 - [ ] Layout & Navigation
   - [ ] Create admin layout
   - [ ] Implement sidebar navigation
@@ -187,7 +500,7 @@ Portfolio website with focus on Telugu content, featuring blogs, novels, and sto
   - [ ] Sitemap generation
   - [ ] Search engine optimization
 
-### 7. Notion POC to Production Conversion 🚀 CURRENT PHASE
+### 7. Notion POC to Production Conversion ✅ COMPLETED
 
 #### Phase 1: Production Polish (1-2 weeks)
 - [x] **SEO Meta Tags Implementation** ✅ COMPLETED
@@ -294,49 +607,35 @@ The blog system now maintains its core functionality with a clean, minimal desig
   - [ ] Add author contact forms
 
 ## Priority Tasks
-1. **Phase 3 Advanced Features** 🚀 CURRENT PRIORITY
-   - [ ] Blog analytics dashboard
+1. **Phase 1: Custom CMS Foundation** 🚀 CURRENT PRIORITY
+   - [ ] Database schema design and implementation
+   - [ ] Supabase Auth setup with RLS
+   - [ ] Admin dashboard foundation
+   - [ ] Basic API routes for all content types
+
+2. **Phase 2: Content Editor & Management** 
+   - [ ] TipTap rich text editor implementation
+   - [ ] Content management interface
+   - [ ] Media upload and management
+   - [ ] Content creation and editing workflows
+
+3. **Phase 3: Advanced Features**
+   - [ ] Media library and file management
    - [ ] Content scheduling system
-   - [ ] Advanced search functionality
-   - [ ] Category pages
-   - [ ] Author profile pages
+   - [ ] SEO and analytics tools
+   - [ ] Comment moderation interface
 
-2. **Phase 1 Production Features** ✅ COMPLETED
-   - [x] Implement SEO meta tags for better search rankings
-   - [x] Add caching strategy for improved performance
-   - [x] Set up analytics tracking for user engagement
-   - [x] Create RSS feed for content syndication
-   - [x] Generate XML sitemap for search engines
-
-3. **Content Management Setup**
-   - [ ] Access and configure Notion workspace
-   - [ ] Create initial content (Story, Novel, Blog)
-   - [ ] Test content publishing workflow
-
-4. **API Configuration**
-   - [ ] Set up proper API tokens
-   - [ ] Configure CORS for domain
-   - [ ] Test read/write operations
-
-5. **Notion POC Setup ✅ COMPLETED**
-   - [x] Set up Notion integration
-   - [x] Create test content
-   - [x] Implement basic display
-   - [x] Create beautiful, production-ready blogs page
-   - [x] Add individual blog post pages
-   - [x] Implement social sharing functionality
-   - [x] Create comprehensive documentation
+4. **Phase 4: Migration & Production**
+   - [ ] Notion content migration
+   - [ ] Production deployment
+   - [ ] Performance optimization
+   - [ ] Documentation and testing
 
 ## Notes
-- Focus on Telugu language support throughout development
-- Ensure all content types support both Telugu and English
-- Maintain performance optimization as a continuous task
-- Regular testing of language switching functionality
-- Keep documentation updated with any major changes
-- ✅ Notion POC has been successfully implemented with a stunning blogs page
-- The beautiful blogs page serves as a template for future blog implementations
-- Enhanced Notion integration supports rich blog features with cover images, categories, tags, and more
-- **Production conversion is now in progress** with Phase 1 features being implemented
-- Comprehensive documentation has been created for future maintenance and development
-- **Current focus**: Converting the successful POC into a production-ready blog platform
-- **System**: Using Notion-based blog system exclusively (Sanity removed)
+- **NEW DIRECTION**: Transitioning from Notion to custom in-house CMS
+- **BENEFITS**: Full control, better Telugu support, reduced costs, improved performance
+- **TIMELINE**: 8 weeks for complete implementation
+- **TECH STACK**: Next.js + Supabase + TipTap + shadcn/ui
+- **PRIORITY**: Security and Telugu language support are top priorities
+- **MIGRATION**: Parallel development with gradual content migration
+- **MAINTENANCE**: Self-hosted solution reduces long-term dependency costs

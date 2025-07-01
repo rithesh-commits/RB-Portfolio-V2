@@ -45,20 +45,23 @@ const content = {
 }
 
 interface CommentSectionProps {
-  blogSlug: string
+  blogPostId: string
   blogTitle: string
 }
 
 type Comment = {
-  id: number
+  id: string
   created_at: string
   author_name: string
   author_email: string
   comment_text: string
-  author_role?: string | null
+  status: 'pending' | 'approved' | 'rejected'
+  is_admin_comment?: boolean
+  admin_user_id?: string | null
+  parent_comment_id?: string | null
 }
 
-export default function CommentSection({ blogSlug, blogTitle }: CommentSectionProps) {
+export default function CommentSection({ blogPostId, blogTitle }: CommentSectionProps) {
   const { language } = useLanguage()
   const t = content[language as keyof typeof content]
 
@@ -81,7 +84,7 @@ export default function CommentSection({ blogSlug, blogTitle }: CommentSectionPr
     async function fetchComments() {
       setLoading(true)
       setFetchError('')
-      const res = await fetch(`/api/comments?blog_slug=${encodeURIComponent(blogSlug)}`)
+      const res = await fetch(`/api/comments?blog_post_id=${encodeURIComponent(blogPostId)}&status=approved`)
       if (!res.ok) {
         setFetchError(t.error)
         setLoading(false)
@@ -92,7 +95,7 @@ export default function CommentSection({ blogSlug, blogTitle }: CommentSectionPr
       setLoading(false)
     }
     fetchComments()
-  }, [blogSlug, t.error])
+  }, [blogPostId, t.error])
 
   // Handle form submit
   async function handleSubmit(e: React.FormEvent) {
@@ -110,7 +113,7 @@ export default function CommentSection({ blogSlug, blogTitle }: CommentSectionPr
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        blog_slug: blogSlug,
+        blog_post_id: blogPostId,
         author_name: name,
         author_email: email,
         comment_text: comment,
@@ -123,6 +126,12 @@ export default function CommentSection({ blogSlug, blogTitle }: CommentSectionPr
       setEmail('')
       setComment('')
       setNewsletter(false)
+      // Refresh comments to show the new one
+      const refreshRes = await fetch(`/api/comments?blog_post_id=${encodeURIComponent(blogPostId)}&status=approved`)
+      if (refreshRes.ok) {
+        const refreshData = await refreshRes.json()
+        setComments(refreshData.comments || [])
+      }
     } else {
       setSubmitError(t.error)
     }
@@ -227,7 +236,7 @@ export default function CommentSection({ blogSlug, blogTitle }: CommentSectionPr
                     <div className="flex items-center gap-2 mb-1">
                       <User className="w-4 h-4 text-gray-400" />
                       <span className="font-medium text-gray-900 dark:text-white">{c.author_name}</span>
-                      {c.author_role === 'owner' && (
+                      {c.is_admin_comment && (
                         <Badge className="ml-2 bg-[#0056D2] text-white px-2 py-0.5 text-xs font-semibold">{t.owner}</Badge>
                       )}
                     </div>

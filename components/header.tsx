@@ -44,7 +44,7 @@ export default function Header({ language, toggleLanguage }: HeaderProps) {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="bg-white shadow-sm border-b border-blue-100 hidden md:block">
+      <nav className="bg-white shadow-sm border-b border-blue-100 hidden md:block sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex-shrink-0">
@@ -129,7 +129,7 @@ export default function Header({ language, toggleLanguage }: HeaderProps) {
       </nav>
 
       {/* Mobile Top Bar */}
-      <div className="bg-white shadow-sm border-b border-blue-100 md:hidden">
+      <div className="bg-white shadow-sm border-b border-blue-100 md:hidden sticky top-0 z-50">
         <div className="flex justify-between items-center h-16 px-4">
           <Link href="/">
             <h1 className="text-lg font-bold text-[#0056D2] telugu-heading cursor-pointer">

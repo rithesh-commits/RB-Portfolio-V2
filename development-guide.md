@@ -1,6 +1,192 @@
 # RB Portfolio V2 - Development Guide
 
+## 🚀 MAJOR UPDATE: Transitioning to Custom In-House CMS
+
+### New Direction (December 2024)
+**Status**: Phase 1 COMPLETED - Foundation & Authentication ✅
+
+#### Why the Change?
+After successfully implementing a Notion-based blog system, we're now transitioning to a **custom in-house CMS** for the following reasons:
+
+1. **Full Control**: Complete ownership of content management workflow
+2. **Better Telugu Support**: Native Telugu language support in the editor
+3. **Cost Reduction**: Eliminate Notion API costs and dependencies
+4. **Performance**: Faster content delivery without external API calls
+5. **Customization**: Tailored features for Ravindar's specific needs
+6. **Security**: Admin-only access with proper authentication
+
+#### New Tech Stack
+- **Frontend**: Next.js 14 (current)
+- **Backend**: Next.js API Routes (serverless functions)
+- **Database**: Supabase PostgreSQL (already configured)
+- **Authentication**: Supabase Auth with Row Level Security (RLS)
+- **Rich Text Editor**: TipTap (excellent Telugu support)
+- **Media Storage**: Supabase Storage (already configured)
+- **UI Components**: shadcn/ui (already configured)
+- **Form Handling**: React Hook Form + Zod validation
+- **State Management**: Zustand (already configured)
+
+#### Development Phases
+1. **Phase 1 (Weeks 1-2)**: Foundation & Authentication ✅ COMPLETED
+   - ✅ Database schema design
+   - ✅ Supabase Auth setup with RLS
+   - ✅ Admin dashboard foundation
+   - 🚀 Basic API routes (IN PROGRESS)
+
+2. **Phase 2 (Weeks 3-4)**: Content Editor & Management
+   - TipTap rich text editor implementation
+   - Content management interface
+   - Media upload and management
+   - Content creation workflows
+
+3. **Phase 3 (Weeks 5-6)**: Advanced Features
+   - Media library and file management
+   - Content scheduling system
+   - SEO and analytics tools
+   - Comment moderation interface
+
+4. **Phase 4 (Weeks 7-8)**: Migration & Production
+   - Notion content migration
+   - Production deployment
+   - Performance optimization
+   - Documentation and testing
+
+#### ✅ Phase 1 Implementation Details
+
+**Database Schema Created** (`cms-schema.sql`):
+- Complete SQL schema for all content types
+- Row Level Security (RLS) policies implemented
+- Indexes for performance optimization
+- Default categories and pages data
+- Triggers for automatic timestamp updates
+
+**Authentication System**:
+- `/admin/login` - Beautiful login page with Supabase Auth
+- Protected `/admin` layout with session management
+- Automatic redirect to login for unauthenticated users
+- User profile dropdown with logout functionality
+- Session persistence and auth state management
+
+**Admin Dashboard** (`/admin`):
+- **Real Data Integration**: Connected to Supabase for live statistics and recent activity
+- **Modern UI**: Brand color scheme (#0056D2) with gradients and glassmorphism effects
+- **Enhanced Sidebar**: Modern navigation with descriptions, logout functionality, and improved visual hierarchy
+- **Live Statistics**: Real-time counts for blogs, stories, novels, poems, comments, and subscribers
+- **Recent Activity Feed**: Live feed showing actual blog posts and comments from database
+- **Responsive Design**: Loading states, smooth animations, and mobile-friendly layout
+- **Sticky Header**: Header now sticks to top on landing pages for better navigation
+- **Proper Layout**: Fixed footer positioning with flexbox layout structure
+
+**TypeScript Types** (`types/cms.ts`):
+- Complete type definitions for all database tables
+- API response types and form interfaces
+- Dashboard stats and content filters
+- Type-safe database operations
+
+**Database Utilities** (`lib/db/cms.ts`):
+- CRUD operations for all content types
+- Pagination and filtering support
+- Error handling and type safety
+- Dashboard statistics functions
+
+#### Migration Strategy
+- **Parallel Development**: Build new CMS alongside existing Notion system
+- **Content Migration**: Export Notion content and import to new CMS
+- **Gradual Switch**: Switch one content type at a time (blogs → stories → novels)
+- **Testing**: Thorough testing before removing Notion dependencies
+- **Cleanup**: Remove Notion code and dependencies
+
+#### Benefits of Custom CMS
+- **Telugu-First**: Native Telugu language support in editor
+- **Admin-Only**: Secure single-user admin system
+- **Inline Editing**: Edit content directly on pages
+- **Better Performance**: No external API dependencies
+- **Cost Effective**: No ongoing Notion API costs
+- **Full Control**: Custom features and workflows
+
+#### Next Steps: Phase 2
+1. **Install TipTap Editor**: Add rich text editor with Telugu support
+2. **Create API Routes**: Build RESTful endpoints for all content types
+3. **Content Management Interface**: Build list views and editing forms
+4. **Media Upload**: Implement file upload with Supabase Storage
+
+#### Current Status
+- ✅ **Phase 1 Complete**: Foundation and authentication working
+- 🚀 **Phase 2 Starting**: Content editor and API development
+- 📊 **Database Ready**: All tables and security policies in place
+- 🔐 **Auth Working**: Admin login and session management functional
+- 🎨 **UI Beautiful**: Modern dashboard with responsive design
+- ✅ **Dependencies Fixed**: React version conflicts resolved, development environment stable
+
+---
+
 ## Recent Updates
+
+### Enhanced Comments System with Moderation ✅ COMPLETED
+**Date**: December 2024
+**Task**: Enhanced comments system for blog-only comments with admin moderation support
+
+#### What Was Done
+1. **Database Schema Enhancement**: Updated comments table to support blog-only comments and moderation
+2. **API Updates**: Enhanced comments API with new fields and moderation endpoints
+3. **Frontend Updates**: Updated CommentSection component to use new API structure
+4. **Type Safety**: Updated TypeScript types for new comment structure
+
+#### Database Changes (`database-schema.sql`)
+```sql
+-- Enhanced comments table for blog-only comments with moderation
+ALTER TABLE IF EXISTS comments ADD COLUMN IF NOT EXISTS blog_post_id UUID REFERENCES blog_posts(id) NOT NULL;
+ALTER TABLE IF EXISTS comments ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'approved' CHECK (status IN ('pending', 'approved', 'rejected'));
+ALTER TABLE IF EXISTS comments ADD COLUMN IF NOT EXISTS parent_comment_id UUID REFERENCES comments(id);
+ALTER TABLE IF EXISTS comments ADD COLUMN IF NOT EXISTS is_admin_comment BOOLEAN DEFAULT false;
+ALTER TABLE IF EXISTS comments ADD COLUMN IF NOT EXISTS admin_user_id UUID REFERENCES auth.users(id);
+```
+
+#### API Changes (`app/api/comments/route.ts`)
+- **GET**: Now uses `blog_post_id` instead of `blog_slug`, supports status filtering
+- **POST**: Creates comments with `blog_post_id`, default status 'approved'
+- **PATCH**: New endpoint for admin moderation (approve/reject/edit)
+- **DELETE**: New endpoint for admin comment deletion
+
+#### Frontend Changes (`components/comment-section.tsx`)
+- **Props**: Changed from `blogSlug` to `blogPostId` (UUID)
+- **API Calls**: Updated to use `blog_post_id` parameter
+- **TypeScript**: Updated Comment type to include new fields
+- **Admin Badge**: Now uses `is_admin_comment` instead of `author_role`
+
+#### Blog Page Updates (`app/blogs/[slug]/page.tsx`)
+- **CommentSection**: Now passes `blog.id` (UUID) instead of `params.slug`
+
+#### Key Features
+- **Blog-Only Comments**: Comments are only allowed on blog posts (not stories, novels, pages)
+- **Moderation System**: Comments have status (pending/approved/rejected) with 'approved' as default
+- **Admin Replies**: Support for admin comments with `is_admin_comment` flag
+- **Threaded Comments**: Future-ready with `parent_comment_id` for replies
+- **Type Safety**: Full TypeScript support for all new fields
+
+#### API Endpoints
+```
+GET    /api/comments?blog_post_id=uuid&status=approved
+POST   /api/comments                    # Create new comment
+PATCH  /api/comments                    # Admin: Approve/reject/edit
+DELETE /api/comments?id=uuid           # Admin: Delete comment
+```
+
+#### Next Steps for Comments
+1. **Admin Moderation Interface**: Build admin dashboard for comment moderation
+2. **Authentication**: Add proper auth checks to PATCH/DELETE endpoints
+3. **Threaded Replies**: Implement UI for threaded comment replies
+4. **Email Notifications**: Notify admin of new comments requiring moderation
+
+#### Troubleshooting: React Version Conflicts
+**Issue**: `TypeError: Cannot read properties of null (reading 'useReducer')`
+**Cause**: Multiple React versions or version mismatches in dependencies
+**Solution**: 
+1. Clean `node_modules` and lock files
+2. Pin React and React-DOM to exact versions (18.3.1)
+3. Fix dependency conflicts (e.g., date-fns version for react-day-picker)
+4. Reinstall dependencies with `npm install`
+**Status**: ✅ RESOLVED - Development environment now stable
 
 ### Blog System Migration ✅ COMPLETED
 **Date**: December 2024

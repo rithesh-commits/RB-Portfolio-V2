@@ -415,7 +415,7 @@ export default function BlogPostPage() {
               )}
 
               {/* Comment Section */}
-              <CommentSection blogSlug={params.slug as string} blogTitle={blog.title} />
+              <CommentSection blogPostId={blog.id} blogTitle={blog.title} />
             </div>
           </div>
         </div>

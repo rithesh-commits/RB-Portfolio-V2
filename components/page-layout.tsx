@@ -15,9 +15,9 @@ export default function PageLayout({ children }: PageLayoutProps) {
   const { language, toggleLanguage } = useLanguage()
 
   return (
-    <div className="min-h-screen bg-[#F5FBFF] pb-20 md:pb-0">
+    <div className="min-h-screen bg-[#F5FBFF] flex flex-col">
       <Header language={language} toggleLanguage={toggleLanguage} />
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer language={language} toggleLanguage={toggleLanguage} />
       <MobileNavigation language={language} toggleLanguage={toggleLanguage} />
     </div>
