@@ -7,6 +7,7 @@ import { Home, FileText, BookOpen, MessageSquare, Settings, MoreHorizontal, X, L
 import { supabase } from "@/lib/supabaseClient"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
+import { sessionManager } from "@/lib/sessionManager"
 
 export default function AdminMobileNavigation() {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
@@ -16,7 +17,7 @@ export default function AdminMobileNavigation() {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut()
+      await sessionManager.forceLogout()
       toast({
         title: "Logged out successfully",
         description: "You have been signed out of the admin panel.",

@@ -65,7 +65,9 @@ After successfully implementing a Notion-based blog system, we're now transition
 - Protected `/admin` layout with session management
 - Automatic redirect to login for unauthenticated users
 - User profile dropdown with logout functionality
-- Session persistence and auth state management
+- **Enhanced Session Management** - 24-hour session timeout with automatic refresh
+- **Session Status Display** - Real-time session time remaining indicator
+- **Force Logout** - Automatic logout when session expires or becomes invalid
 
 **Admin Dashboard** (`/admin`):
 - **Real Data Integration**: Connected to Supabase for live statistics and recent activity
@@ -187,6 +189,27 @@ DELETE /api/comments?id=uuid           # Admin: Delete comment
 3. Fix dependency conflicts (e.g., date-fns version for react-day-picker)
 4. Reinstall dependencies with `npm install`
 **Status**: ✅ RESOLVED - Development environment now stable
+
+#### Troubleshooting: Session Management Issues
+**Issue**: Users remain logged in for extended periods (3+ days) without proper session expiration
+**Cause**: Supabase default session timeout is too long (up to 1 year)
+**Solution**: 
+1. **Custom Session Manager**: Created `lib/sessionManager.ts` with 24-hour session timeout
+2. **Automatic Refresh**: Sessions refresh 30 minutes before expiry
+3. **Force Logout**: Automatic logout when session becomes invalid
+4. **Session Status Display**: Real-time indicator showing remaining session time
+5. **Manual Refresh**: Admin can manually refresh session when needed
+**Status**: ✅ RESOLVED - Session management now properly handles timeouts and automatic logout
+
+#### Troubleshooting: RLS (Row Level Security) Issues
+**Issue**: `/ravi_blogs` page shows empty for public users but works for admin
+**Cause**: RLS policies not properly applied or blog posts not in 'published' status
+**Solution**: 
+1. **Check Blog Post Status**: Ensure blog posts have `status = 'published'` and valid `published_at` date
+2. **Apply RLS Policies**: Run the SQL script in `scripts/fix-rls.sql` in Supabase SQL editor
+3. **Clear Cache**: Delete `.next` folder and restart dev server
+4. **Debug Frontend**: Check browser console for Supabase errors
+**Status**: ✅ RESOLVED - RLS policies applied successfully, public read access working
 
 ### Blog System Migration ✅ COMPLETED
 **Date**: December 2024

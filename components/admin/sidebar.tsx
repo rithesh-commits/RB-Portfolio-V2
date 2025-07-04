@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { supabase } from "@/lib/supabaseClient"
 import { useRouter } from "next/navigation"
+import { sessionManager } from "@/lib/sessionManager"
 
 const routes = [
   {
@@ -75,7 +76,7 @@ export function AdminSidebar() {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut()
+      await sessionManager.forceLogout()
       router.push('/login')
     } catch (error) {
       console.error('Logout error:', error)

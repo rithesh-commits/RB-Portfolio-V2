@@ -1,0 +1,220 @@
+Table pages {
+  id uuid [pk]
+  slug varchar [unique, not null]
+  title_en text [not null]
+  title_te text [not null]
+  content_en text
+  content_te text
+  meta_title_en varchar
+  meta_title_te varchar
+  meta_description_en text
+  meta_description_te text
+  meta_keywords_en text
+  meta_keywords_te text
+  og_image_url text
+  status varchar
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table blog_posts {
+  id uuid [pk]
+  title_en text [not null]
+  title_te text [not null]
+  slug varchar [unique, not null]
+  summary_en text
+  summary_te text
+  excerpt_en text
+  excerpt_te text
+  content_en text [not null]
+  content_te text [not null]
+  cover_image_url text
+  category_id uuid
+  author_en varchar
+  author_te varchar
+  reading_time_minutes int
+  tags text
+  featured boolean
+  status varchar
+  published_at timestamp
+  scheduled_at timestamp
+  meta_title_en varchar
+  meta_title_te varchar
+  meta_description_en text
+  meta_description_te text
+  meta_keywords_en text
+  meta_keywords_te text
+  og_image_url text
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table stories {
+  id uuid [pk]
+  title_en text [not null]
+  title_te text [not null]
+  slug varchar [unique, not null]
+  summary_en text
+  summary_te text
+  content_en text [not null]
+  content_te text [not null]
+  cover_image_url text
+  category_id uuid
+  author_en varchar
+  author_te varchar
+  reading_time_minutes int
+  tags text
+  featured boolean
+  status varchar
+  published_at timestamp
+  scheduled_at timestamp
+  meta_title_en varchar
+  meta_title_te varchar
+  meta_description_en text
+  meta_description_te text
+  meta_keywords_en text
+  meta_keywords_te text
+  og_image_url text
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table novels {
+  id uuid [pk]
+  title_en text [not null]
+  title_te text [not null]
+  slug varchar [unique, not null]
+  summary_en text
+  summary_te text
+  content_en text [not null]
+  content_te text [not null]
+  cover_image_url text
+  category_id uuid
+  author_en varchar
+  author_te varchar
+  reading_time_minutes int
+  tags text
+  featured boolean
+  status varchar
+  published_at timestamp
+  scheduled_at timestamp
+  meta_title_en varchar
+  meta_title_te varchar
+  meta_description_en text
+  meta_description_te text
+  meta_keywords_en text
+  meta_keywords_te text
+  og_image_url text
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table poems {
+  id uuid [pk]
+  title_en text [not null]
+  title_te text [not null]
+  slug varchar [unique, not null]
+  summary_en text
+  summary_te text
+  content_en text [not null]
+  content_te text [not null]
+  cover_image_url text
+  category_id uuid
+  author_en varchar
+  author_te varchar
+  reading_time_minutes int
+  tags text
+  featured boolean
+  status varchar
+  published_at timestamp
+  scheduled_at timestamp
+  meta_title_en varchar
+  meta_title_te varchar
+  meta_description_en text
+  meta_description_te text
+  meta_keywords_en text
+  meta_keywords_te text
+  og_image_url text
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table categories {
+  id uuid [pk]
+  name_en varchar [not null]
+  name_te varchar [not null]
+  slug varchar [unique, not null]
+  description_en text
+  description_te text
+  color varchar
+  icon varchar
+  sort_order int
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table media {
+  id uuid [pk]
+  filename varchar [not null]
+  original_filename varchar [not null]
+  file_path text [not null]
+  file_url text [not null]
+  file_size int [not null]
+  mime_type varchar [not null]
+  width int
+  height int
+  alt_text_en varchar
+  alt_text_te varchar
+  caption_en text
+  caption_te text
+  tags text
+  usage_count int
+  created_at timestamp
+  updated_at timestamp
+  created_by uuid
+  updated_by uuid
+}
+
+Table subscribers {
+  id uuid [pk]
+  email varchar [unique, not null]
+  name_en varchar
+  name_te varchar
+  status varchar
+  source varchar
+  subscribed_at timestamp
+  unsubscribed_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table comments {
+  id uuid [pk]
+  blog_post_id uuid
+  status varchar
+  parent_comment_id uuid
+  is_admin_comment boolean
+  admin_user_id uuid
+  content text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: blog_posts.category_id > categories.id
+Ref: stories.category_id > categories.id
+Ref: novels.category_id > categories.id
+Ref: poems.category_id > categories.id
+Ref: comments.blog_post_id > blog_posts.id
+Ref: comments.parent_comment_id > comments.id 

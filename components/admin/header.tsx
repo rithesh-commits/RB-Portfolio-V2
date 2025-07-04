@@ -10,6 +10,8 @@ import { LanguageToggle } from "@/components/admin/language-toggle"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { LogOut, User as UserIcon, Settings } from 'lucide-react'
 import { useToast } from '../../hooks/use-toast'
+import { sessionManager } from '../../lib/sessionManager'
+import { SessionStatus } from './session-status'
 
 interface AdminHeaderProps {
   user: User;
@@ -23,15 +25,15 @@ export function AdminHeader({ user }: AdminHeaderProps) {
   const handleLogout = async () => {
     setLoading(true)
     try {
-      const { error } = await supabase.auth.signOut()
-      if (error) throw error
+      // Use session manager to handle logout
+      await sessionManager.forceLogout()
       
       toast({
         title: "Logged out successfully",
         description: "You have been signed out of the admin panel.",
       })
       
-      router.push('/admin/login')
+      router.push('/login')
     } catch (error) {
       toast({
         title: "Logout failed",
@@ -60,6 +62,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
         </div>
         
         <div className="flex items-center space-x-4">
+          <SessionStatus />
           <LanguageToggle />
           
           <DropdownMenu>

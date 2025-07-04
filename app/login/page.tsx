@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Lock, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { sessionManager } from '@/lib/sessionManager';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -34,7 +35,11 @@ export default function AdminLogin() {
         throw error;
       }
 
-      if (data.user) {
+      if (data.user && data.session) {
+        // Initialize session management
+        await sessionManager.initialize()
+        sessionManager.setupRefreshTimer(data.session)
+        
         toast({
           title: "Login successful",
           description: "Welcome to the admin dashboard!",

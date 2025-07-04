@@ -9,6 +9,7 @@ import { AdminSidebar } from '@/components/admin/sidebar'
 import { AdminHeader } from '@/components/admin/header'
 import AdminFooter from '@/components/admin/footer'
 import AdminMobileNavigation from '@/components/admin/mobile-navigation'
+import { sessionManager } from '../../lib/sessionManager'
 
 export default function AdminLayout({
   children,
@@ -20,37 +21,71 @@ export default function AdminLayout({
   const router = useRouter()
 
   useEffect(() => {
-    // Check current session
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      
-      if (session?.user) {
-        setUser(session.user)
-      } else {
-        // No session, redirect to login
+    // Initialize session management
+    const initializeSession = async () => {
+      try {
+        // Initialize session manager
+        await sessionManager.initialize()
+        
+        // Check current session
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (session?.user) {
+          // Validate session using session manager
+          if (sessionManager.isSessionValid(session)) {
+            setUser(session.user)
+            // Setup refresh timer for this session
+            sessionManager.setupRefreshTimer(session)
+          } else {
+            // Session is invalid, force logout
+            await sessionManager.forceLogout()
+            router.push('/login')
+            return
+          }
+        } else {
+          // No session, redirect to login
+          router.push('/login')
+          return
+        }
+        
+        setLoading(false)
+      } catch (error) {
+        console.error('Session initialization error:', error)
         router.push('/login')
-        return
       }
-      
-      setLoading(false)
     }
 
-    checkUser()
+    initializeSession()
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
-          setUser(session.user)
-          setLoading(false)
+          if (sessionManager.isSessionValid(session)) {
+            setUser(session.user)
+            sessionManager.setupRefreshTimer(session)
+            setLoading(false)
+          } else {
+            await sessionManager.forceLogout()
+            router.push('/login')
+          }
         } else if (event === 'SIGNED_OUT') {
           setUser(null)
+          sessionManager.cleanup()
           router.push('/login')
+        } else if (event === 'TOKEN_REFRESHED' && session) {
+          // Session was refreshed, update user state
+          setUser(session.user)
+          sessionManager.setupRefreshTimer(session)
         }
       }
     )
 
-    return () => subscription.unsubscribe()
+    // Cleanup on unmount
+    return () => {
+      subscription.unsubscribe()
+      sessionManager.cleanup()
+    }
   }, [router])
 
   if (loading) {
